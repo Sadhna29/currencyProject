@@ -1,0 +1,123 @@
+<html lang="en">
+<head>
+<title>Currency Converter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Style the body */
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #ccfff3;
+}
+
+
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+  box-shadow: 2px 2px 5px #008062;
+
+}
+
+
+.content {padding:20px;}
+
+.box {
+  background-color: #1abc9c;
+  width: 180px;
+  height: 20px;
+  padding: 10px;
+  border: 2px;
+  margin: 0;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #008062;
+}
+
+.box2 {
+  background-color: #1abc9c;
+  width: 280px;
+  height: 20px;
+  padding: 10px;
+  border: 2px;
+  margin: 0;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #008062;
+    } 
+
+.button {
+  border: none;
+  background-color: #1abc9c;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.result-box {
+  background-color: #1abc9c;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 20px;
+  width: 180px;
+  color: white;
+  text-align: center; 
+  font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>Currency Converter</h2>
+  <p>By Vihaan and Sadhna</p>
+</div>
+
+<div class="content">
+
+  <div class="box">
+  <form method="POST"> <label for="base_currency" style="font-family:arial">Base Currency:</label>
+  <select name="base_currency" id="base_currency">
+    <option value="INR" {% if selected_base_currency == 'INR' %}selected{% endif %}>INR</option>
+    <option value="USD" {% if selected_base_currency == 'USD' %}selected{% endif %}>USD</option>
+    <option value="GBP" {% if selected_base_currency == 'GBP' %}selected{% endif %}>GBP</option>
+    <option value="EUR" {% if selected_base_currency == 'EUR' %}selected{% endif %}>EUR</option>
+    </select></div>
+  <br>
+
+
+  <div class="box">
+  <label for="target_currency" style="font-family:arial">Target Currency:</label>
+  <select name="target_currency" id="target_currency">
+    <option value="INR" {% if selected_target_currency == 'INR' %}selected{% endif %}>INR</option>
+    <option value="USD" {% if selected_target_currency == 'USD' %}selected{% endif %}>USD</option>
+    <option value="GBP" {% if selected_target_currency == 'GBP' %}selected{% endif %}>GBP</option>
+    <option value="EUR" {% if selected_target_currency == 'EUR' %}selected{% endif %}>EUR</option> </select>
+      </select></div>
+      <br><br>
+
+
+      <div class="box2">
+      <label for="amount" style="font-family:verdana">Input amount: </label>
+      <input type="number" id="amount" name="amount" value="{{ '%.2f' % input_amount }}" step="0.01" min="0" required>
+
+      </div>
+
+      <br>
+      <button type="submit" style="font-family:arial ; border-radius: 6px; box-shadow: 2px 2px 5px #008062; ;">Convert Currency</button></form><br>
+
+      <br>
+      <div class="box">
+          <label style="font-family:arial">{{ '%.2f' % result }}</label>
+        </div>
+      </form>
+
+
+</body>
+</html>
