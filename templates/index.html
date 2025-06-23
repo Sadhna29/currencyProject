@@ -1,123 +1,395 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Currency Converter</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-/* Style the body */
-body {
-  font-family: Arial;
-  margin: 0;
-  background: #ccfff3;
-}
+  <title>Currency Converter</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #e6e6ff;
+    }
 
 
-.header {
-  padding: 60px;
-  text-align: center;
-  background: #1abc9c;
-  color: white;
-  font-size: 30px;
-  box-shadow: 2px 2px 5px #008062;
+    .account-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
 
-}
+    .account-wrapper {
+      position: relative;
+    }
+
+    .account-button {
+      background-color: ;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      font-size: 16px;
+    }
+
+    #myDIV {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      background-color: #99bbff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 5px;
+      z-index: 1000;
+    }
+
+    #myDIV button, #myDIV a.button { /* Apply styles to anchor tags that act as buttons */
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      background-color: ;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      text-decoration: none; /* Remove underline for links */
+      color: inherit; /* Inherit color from parent, or set a specific color */
+      text-align: center;
+    }
 
 
-.content {padding:20px;}
+    #myDIV button:hover, #myDIV a.button:hover {
+      background-color: #e0e0e0;
+    }
 
-.box {
-  background-color: #1abc9c;
-  width: 180px;
-  height: 20px;
-  padding: 10px;
-  border: 2px;
-  margin: 0;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px #008062;
-}
+    .header {
+      padding: 60px;
+      text-align: center;
+      background: #000099;
+      color: white;
+      font-size: 30px;
+      box-shadow: 2px 2px 5px #000099;
+    }
 
-.box2 {
-  background-color: #1abc9c;
-  width: 280px;
-  height: 20px;
-  padding: 10px;
-  border: 2px;
-  margin: 0;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px #008062;
-    } 
+    .content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.button {
-  border: none;
-  background-color: #1abc9c;
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
+    .bigbox {
+      background-color: white;
+      width: 900px;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 2px 2px 5px #99bbff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px; /* Space out sections */
+    }
 
-.result-box {
-  background-color: #1abc9c;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 20px;
-  width: 180px;
-  color: white;
-  text-align: center; 
-  font-weight: bold;
-}
+    .form-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-</style>
+    .input-box {
+      background-color: #99bbff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 2px 2px 5px #99bbff;
+      color: white;
+      width: 200px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .input-box label {
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .input-box select,
+    .input-box input {
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .chart-container {
+      width: 600px; /* Set a specific width for the chart */
+      height: 400px; /* Set a specific height for the chart */
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+      display: flex;
+      justify-content: center; /* Center the canvas inside the container */
+      align-items: center;
+    }
+
+    .chart-container canvas {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .button {
+      border: none;
+      background-color: #000099;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px #000099;
+      margin-top: 10px;
+      text-decoration: none; /* For button acting as link */
+      display: inline-block; /* For button acting as link */
+    }
+
+    .button:hover {
+        background-color: #000077;
+    }
+
+    .result-box {
+      background-color: #99bbff;
+      padding: 15px 30px; /* Increased padding for better appearance */
+      border-radius: 8px;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      /* Removed fixed width to allow dynamic sizing */
+      /* width: 200px; */
+      display: inline-block; /* Ensures it only takes as much width as its content */
+      margin-top: 30px;
+      box-shadow: 2px 2px 5px #99bbff;
+      min-width: 150px; /* Optional: Set a minimum width if you want it to not shrink too much */
+    }
+
+    /* Flash Messages */
+    .flash-messages {
+        list-style: none;
+        padding: 0;
+        margin-top: 10px;
+        width: 100%; /* Make it span the width of its container */
+        max-width: 600px; /* Limit width for better readability */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .flash-messages li {
+        padding: 8px 15px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .flash-messages .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .flash-messages .danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .flash-messages .info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+
+    .flash-messages .warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+    }
+
+    /* Auth Buttons Section */
+    .auth-buttons-section {
+        margin-bottom: 30px; /* Space from converter */
+        text-align: center;
+    }
+    .auth-buttons-section .button {
+        margin: 0 10px; /* Space between buttons */
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="header">
-  <h2>Currency Converter</h2>
-  <p>By Vihaan and Sadhna</p>
-</div>
+  <div class="header">
+    <h2>Currency Converter</h2>
+    <p>Check live foreign currency exchange rates</p>
+  </div>
 
-<div class="content">
+  <div class="content">
 
-  <div class="box">
-  <form method="POST"> <label for="base_currency" style="font-family:arial">Base Currency:</label>
-  <select name="base_currency" id="base_currency">
-    <option value="INR" {% if selected_base_currency == 'INR' %}selected{% endif %}>INR</option>
-    <option value="USD" {% if selected_base_currency == 'USD' %}selected{% endif %}>USD</option>
-    <option value="GBP" {% if selected_base_currency == 'GBP' %}selected{% endif %}>GBP</option>
-    <option value="EUR" {% if selected_base_currency == 'EUR' %}selected{% endif %}>EUR</option>
-    </select></div>
-  <br>
+    <ul class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </ul>
+
+    {% if logged_in_username %}
+    <div class="auth-buttons-section">
+      <h2>Welcome, {{ logged_in_username }}!</h2>
+    </div>
+    {% else %}
+    <div class="auth-buttons-section">
+      <a href="{{ url_for('login') }}" class="button">Login</a>
+      <a href="{{ url_for('register') }}" class="button">Register</a>
+    </div>
+    {% endif %}
+
+    <div class="account-container">
+      <div class="account-wrapper">
+        <button class="account-button" onclick="myFunction()">👤 Account</button>
+        <div id="myDIV">
+          <a href="{{ url_for('history') }}" class="button">View History</a>
+          <a href="{{ url_for('error_log') }}" class="button">View Error Log</a>
+          <a href="{{ url_for('logout') }}" class="button">Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myDIV");
+        x.style.display = (x.style.display === "none" || x.style.display === "") ? "flex" : "none";
+      }
+    </script>
 
 
-  <div class="box">
-  <label for="target_currency" style="font-family:arial">Target Currency:</label>
-  <select name="target_currency" id="target_currency">
-    <option value="INR" {% if selected_target_currency == 'INR' %}selected{% endif %}>INR</option>
-    <option value="USD" {% if selected_target_currency == 'USD' %}selected{% endif %}>USD</option>
-    <option value="GBP" {% if selected_target_currency == 'GBP' %}selected{% endif %}>GBP</option>
-    <option value="EUR" {% if selected_target_currency == 'EUR' %}selected{% endif %}>EUR</option> </select>
-      </select></div>
-      <br><br>
+    <div class="bigbox">
+      <form method="POST">
+        <div class="form-row">
+          <div class="input-box">
+            <label for="base_currency">Base Currency</label>
+            <select name="base_currency" id="base_currency">
+              {% for currency_code in supported_currencies %}
+                <option value="{{ currency_code }}" {% if selected_base_currency == currency_code %}selected{% endif %}>{{ currency_code }}</option>
+              {% endfor %}
+              </select>
+          </div>
 
+          <div class="input-box">
+            <label for="target_currency">Target Currency</label>
+            <select name="target_currency" id="target_currency">
+              {% for currency_code in supported_currencies %}
+                <option value="{{ currency_code }}" {% if selected_target_currency == currency_code %}selected{% endif %}>{{ currency_code }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-      <div class="box2">
-      <label for="amount" style="font-family:verdana">Input amount: </label>
-      <input type="number" id="amount" name="amount" value="{{ '%.2f' % input_amount }}" step="0.01" min="0" required>
+          <div class="input-box">
+            <label for="amount">Input Amount</label>
+            <input type="number" id="amount" name="amount" value="{{ input_amount }}" step="0.01" min="0" required>
+          </div>
+        </div>
 
+        <div class="button-container">
+          <button class="button" type="submit">Convert Currency</button>
       </div>
 
-      <br>
-      <button type="submit" style="font-family:arial ; border-radius: 6px; box-shadow: 2px 2px 5px #008062; ;">Convert Currency</button></form><br>
-
-      <br>
-      <div class="box">
-          <label style="font-family:arial">{{ '%.2f' % result }}</label>
-        </div>
       </form>
+    </div>
 
+    <div class="result-box">
+      {{symbol}} {{ result }}
+    </div>
 
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  <script>
+    // Get data from Flask using Jinja2
+    const xValues = {{ graph_x_values | tojson }};
+    const yValues = {{ graph_y_values | tojson }};
+
+    new Chart("myChart", {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+          label: "Exchange Rate Trend ({{ selected_base_currency }} to {{ selected_target_currency }})",
+          backgroundColor: "rgba(0,0,255,1.0)",
+          borderColor: "rgba(0,0,255,1.0)",
+          data: yValues,
+          fill: false, // Don't fill area under the line
+          lineTension: 0.1 // Add a slight curve to the line
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: true
+        },
+        title: {
+            display: true,
+            text: 'Historical Exchange Rate Trend'
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMax: 1.5,
+              beginAtZero: false // Rates likely won't be zero
+            },
+            scaleLabel: {
+              display: true,
+              labelString: '1 {{ selected_base_currency }} = X {{ selected_target_currency }}'
+            }
+          }],
+          xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Year'
+              }
+          }]
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    // Format the rate to 4 decimal places for better precision on the tooltip
+                    label += parseFloat(tooltipItem.yLabel).toFixed(4);
+                    return label;
+                }
+            }
+        }
+      }
+    });
+  </script>
 </body>
 </html>

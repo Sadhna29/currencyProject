@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Conversion History</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Re-using some styles from index.html for consistency */
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #e6e6ff;
+    }
+    .header {
+      padding: 60px;
+      text-align: center;
+      background: #000099;
+      color: white;
+      font-size: 30px;
+      box-shadow: 2px 2px 5px #000099;
+    }
+    .content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    /* Flash Messages styles (copied from index.html for consistency) */
+    .flash-messages {
+        list-style: none;
+        padding: 0;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 800px; /* Adjust width for history table */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .flash-messages li {
+        padding: 8px 15px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    .flash-messages .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .flash-messages .danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .flash-messages .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    .flash-messages .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+    /* History Table specific styles */
+    .history-table {
+        width: 90%; /* Adjust as needed */
+        max-width: 900px;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden; /* For rounded corners on table */
+    }
+    .history-table th, .history-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    .history-table th {
+        background-color: #000099;
+        color: white;
+        font-weight: bold;
+    }
+    .history-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .history-table tr:hover {
+        background-color: #e0e0e0;
+    }
+    /* Button styles (copied from index.html) */
+    .button {
+      border: none;
+      background-color: #000099;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px #000099;
+      margin-top: 10px;
+      text-decoration: none; /* For button acting as link */
+      display: inline-block; /* For button acting as link */
+    }
+    .button:hover {
+        background-color: #000077;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Conversion History for {{ logged_in_username }}</h2>
+  </div>
+
+  <div class="content">
+    <ul class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </ul>
+
+    {% if history_records %}
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Base Currency</th>
+            <th>Target Currency</th>
+            <th>Amount</th>
+            <th>Converted At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in history_records %}
+            <tr>
+              <td>{{ record[0] }}</td>
+              <td>{{ record[1] }}</td>
+              <td>{{ '%.2f' % record[2] }}</td>
+              <td>{{ record[3] }}</td> {# Displaying timestamp directly #}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No conversion history found for your account. Perform some conversions on the main page while logged in!</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="button" style="margin-top: 30px;">Back to Converter</a>
+    <a href="{{ url_for('logout') }}" class="button" style="margin-top: 10px;">Logout</a>
+  </div>
+</body>
+</html>
